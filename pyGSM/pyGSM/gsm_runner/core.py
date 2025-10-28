@@ -256,6 +256,7 @@ def setup_topologies(cfg: GSMConfig, geoms = None, pes = None):
         p1.add_union_primitives(p2)
 
         print("check {}".format(len(p1.Internals)))
+
     elif cfg['mode'] == 'SE_GSM' or cfg['mode'] == 'SE_Cross':
         for dc in driving_coord_prims:
             if type(dc) != Distance:  # Already handled in topology
@@ -287,23 +288,6 @@ def setup_topologies(cfg: GSMConfig, geoms = None, pes = None):
         return reactant, None, driving_coordinates
 
     if cfg['mode'] == 'DE_GSM':
-        
-        nifty.printcool("Building Primitive Internal Coordinates 2")
-        p2 = PrimitiveInternalCoordinates.from_options(
-            xyz=xyz2,
-            atoms=atoms,
-            addtr=addtr,
-            addcart=addcart,
-            connect=connect,
-            topology=top1,  # Use the topology of 1 because we fixed it above
-        )
-
-        nifty.printcool("Forming Union of Primitives")
-        # Form the union of primitives
-        p1.add_union_primitives(p2)
-
-        print("check {}".format(len(p1.Internals)))
-
         nifty.printcool("Building the product object")
         xyz2 = manage_xyz.xyz_to_np(geoms[-1])
         product = Molecule.copy_from_options(

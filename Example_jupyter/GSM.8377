@@ -1,0 +1,28 @@
+/scratch/user/nchopper/miniconda/miniconda3/envs/gsm_runner_testing/lib/python3.10/site-packages/aimnet2calc/__init__.py:17: UserWarning: PySisiphus is not installed. AIMNet2Pysis will not be available.
+  warnings.warn('PySisiphus is not installed. AIMNet2Pysis will not be available.')
+/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/topology.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+Traceback (most recent call last):
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/Example_jupyter/cli.py", line 229, in <module>
+    main()
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/Example_jupyter/cli.py", line 226, in main
+    run = gsm_api.run_gsm(cfg, verbose=True)
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/gsm_runner/gsm_api.py", line 38, in run_gsm
+    reactant, product, driving_coordinates = core.setup_topologies(cfg, geoms, pes)
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/gsm_runner/core.py", line 288, in setup_topologies
+    product = Molecule.copy_from_options(
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/molecule/molecule.py", line 171, in copy_from_options
+    coord_obj = type(MoleculeA.coord_obj)(MoleculeA.coord_obj.options.copy().set_values({"xyz": xyz}))
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/delocalized_coordinates.py", line 74, in __init__
+    self.build_dlc(xyz)
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/delocalized_coordinates.py", line 309, in build_dlc
+    G = self.Prims.GMatrix(xyz)  # in primitive coords
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/primitive_internals.py", line 350, in GMatrix
+    Bmat = self.wilsonB(xyz)
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/primitive_internals.py", line 330, in wilsonB
+    Blist.append(np.array([p.derivative(xyz[sa:ea, :], start_idx=sa).flatten() for p in self.Internals[sp:ep]]))
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/primitive_internals.py", line 330, in <listcomp>
+    Blist.append(np.array([p.derivative(xyz[sa:ea, :], start_idx=sa).flatten() for p in self.Internals[sp:ep]]))
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/slots.py", line 274, in derivative
+    derivatives[a][0] = self.w[i]
+IndexError: index 11 is out of bounds for axis 0 with size 11

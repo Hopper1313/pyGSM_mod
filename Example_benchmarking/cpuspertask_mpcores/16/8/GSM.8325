@@ -1,0 +1,16 @@
+/scratch/user/nchopper/miniconda/miniconda3/envs/gsm_runner_testing/lib/python3.10/site-packages/aimnet2calc/__init__.py:17: UserWarning: PySisiphus is not installed. AIMNet2Pysis will not be available.
+  warnings.warn('PySisiphus is not installed. AIMNet2Pysis will not be available.')
+/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/topology.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/level_of_theories/ase.py:91: FutureWarning: Please use atoms.calc = calc
+  atoms.set_calculator(self.ase_calculator)
+Traceback (most recent call last):
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/Example_benchmarking/cpuspertask_mpcores/16/8/cli.py", line 224, in <module>
+    main()
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/Example_benchmarking/cpuspertask_mpcores/16/8/cli.py", line 221, in main
+    run = gsm_api.run_gsm(cfg, verbose=True)
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/gsm_runner/gsm_api.py", line 70, in run_gsm
+    core.post_processing(gsm,
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/gsm_runner/core.py", line 435, in post_processing
+    minnodeR = np.argmin(gsm.energies[:gsm.TSnode])
+NameError: name 'np' is not defined

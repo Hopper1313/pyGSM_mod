@@ -1,0 +1,14 @@
+/scratch/user/nchopper/miniconda/miniconda3/envs/gsm_runner_testing/lib/python3.10/site-packages/aimnet2calc/__init__.py:17: UserWarning: PySisiphus is not installed. AIMNet2Pysis will not be available.
+  warnings.warn('PySisiphus is not installed. AIMNet2Pysis will not be available.')
+/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/coordinate_systems/topology.py:4: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import parse_version
+/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/level_of_theories/ase.py:91: FutureWarning: Please use atoms.calc = calc
+  atoms.set_calculator(self.ase_calculator)
+Traceback (most recent call last):
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/Example_jupyter/test.py", line 909, in <module>
+    main()
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/Example_jupyter/test.py", line 712, in main
+    gsm.setup_from_geometries(geoms, reparametrize=inpfileq["reparametrize"], start_climb_immediately=inpfileq["start_climb_immediately"])
+  File "/scratch/user/nchopper/AIMNET2_pygsm_dimer/pyGSM/pyGSM/growing_string_methods/main_gsm.py", line 1150, in setup_from_geometries
+    raise NotImplementedError
+NotImplementedError

@@ -169,8 +169,34 @@ def setup_topologies(cfg: GSMConfig, geoms = None, pes = None):
         xyz1,
         atoms,
     )
+    if cfg['mode'] == 'DE_GSM':
+        xyz2 = manage_xyz.xyz_to_np(geoms[-1])
+        top2 = Topology.build_topology(
+            xyz2,
+            atoms,
+            # hybrid_indices=hybrid_indices,
+            # prim_idx_start_stop=prim_indices,
+        )
 
-    if cfg['mode'] == 'SE_GSM' or cfg['mode'] == 'SE_Cross':
+        # Add bonds to top1 that are present in top2
+        # It's not clear if we should form the topology so the bonds
+        # are the same since this might affect the Primitives of the xyz1 (slightly)
+        # Later we stil need to form the union of bonds, angles and torsions
+        # However, I think this is important, the way its formulated, for identifiyin
+        # the number of fragments and blocks, which is used in hybrid TRIC.
+        for bond in top2.edges():
+            if bond in top1.edges:
+                pass
+            elif (bond[1], bond[0]) in top1.edges():
+                pass
+            else:
+                print(" Adding bond {} to top1".format(bond))
+                if bond[0] > bond[1]:
+                    top1.add_edge(bond[0], bond[1])
+                else:
+                    top1.add_edge(bond[1], bond[0])
+
+    if cfg['mode'] == 'SE_GSM' or cfg['mode'] == 'SE_Cross':  
         driving_coordinates = read_isomers_file(cfg['isomers_file'])
 
         driving_coord_prims = []
@@ -208,14 +234,35 @@ def setup_topologies(cfg: GSMConfig, geoms = None, pes = None):
         addcart=addcart,
         topology=top1,
     )
+    p1.newMakePrimitives(xyz1)
+    print(" done making primitives p1")
 
-    if cfg['mode'] == 'SE_GSM' or cfg['mode'] == 'SE_Cross':
+    if cfg['mode'] == 'DE_GSM':
+        nifty.printcool("Building Primitive Internal Coordinates 2")
+        p2 = PrimitiveInternalCoordinates.from_options(
+            xyz=xyz2,
+            atoms=atoms,
+            addtr=addtr,
+            addcart=addcart,
+            connect=connect,
+            topology=top1,  # Use the topology of 1 because we fixed it above
+        )
+
+        p2.newMakePrimitives(xyz2)
+        print(" done making primitives p2")
+
+        nifty.printcool("Forming Union of Primitives")
+        # Form the union of primitives
+        p1.add_union_primitives(p2)
+
+        print("check {}".format(len(p1.Internals)))
+    elif cfg['mode'] == 'SE_GSM' or cfg['mode'] == 'SE_Cross':
         for dc in driving_coord_prims:
             if type(dc) != Distance:  # Already handled in topology
                 if dc not in p1.Internals:
                     print("Adding driving coord prim {} to Internals".format(dc))
                     p1.append_prim_to_block(dc)
-
+                    
     nifty.printcool("Building Delocalized Internal Coordinates")
     coord_obj1 = DelocalizedInternalCoordinates.from_options(
         xyz=xyz1,
@@ -240,33 +287,7 @@ def setup_topologies(cfg: GSMConfig, geoms = None, pes = None):
         return reactant, None, driving_coordinates
 
     if cfg['mode'] == 'DE_GSM':
-        # find union bonds
-        xyz2 = manage_xyz.xyz_to_np(geoms[-1])
-        top2 = Topology.build_topology(
-            xyz2,
-            atoms,
-            # hybrid_indices=hybrid_indices,
-            # prim_idx_start_stop=prim_indices,
-        )
-
-        # Add bonds to top1 that are present in top2
-        # It's not clear if we should form the topology so the bonds
-        # are the same since this might affect the Primitives of the xyz1 (slightly)
-        # Later we stil need to form the union of bonds, angles and torsions
-        # However, I think this is important, the way its formulated, for identifiyin
-        # the number of fragments and blocks, which is used in hybrid TRIC.
-        for bond in top2.edges():
-            if bond in top1.edges:
-                pass
-            elif (bond[1], bond[0]) in top1.edges():
-                pass
-            else:
-                print(" Adding bond {} to top1".format(bond))
-                if bond[0] > bond[1]:
-                    top1.add_edge(bond[0], bond[1])
-                else:
-                    top1.add_edge(bond[1], bond[0])
-
+        
         nifty.printcool("Building Primitive Internal Coordinates 2")
         p2 = PrimitiveInternalCoordinates.from_options(
             xyz=xyz2,
